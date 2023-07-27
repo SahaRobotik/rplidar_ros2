@@ -425,7 +425,9 @@ public:
         start_motor_service = this->create_service<std_srvs::srv::Empty>("start_motor", 
                                 std::bind(&RPlidarNode::start_motor,this,std::placeholders::_1,std::placeholders::_2));
 
-        //drv->setMotorSpeed();
+        int desired_motor_speed = static_cast<int>(scan_frequency * 62); // rpm, but +2 for safety margin ??
+
+        drv->setMotorSpeed(desired_motor_speed);
 
         rclcpp::Time start_scan_time;
         rclcpp::Time end_scan_time;
