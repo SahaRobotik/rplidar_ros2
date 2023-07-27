@@ -720,6 +720,16 @@ namespace sl {
                 else
                     speed = desired_speed.rpm;
             }
+
+            if (speed > 1023) // hack for S1... TODO get it from LidarMotorInfo lmi; drv->getMotorInfo(lmi);
+            {
+                std::cout << "Required motor speed for the requested scanning frequency exceeds S1's max rotation "
+                                "speed: " << speed << ". Defaulting motor speed to the maximum: 1023." << std::endl;
+                speed = 1023;
+            }
+
+            std::cout << "Setting motor speed to " << speed << std::endl;
+
             switch (_isSupportingMotorCtrl)
             {
             case MotorCtrlSupportNone:
